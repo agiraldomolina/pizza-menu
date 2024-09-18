@@ -92,6 +92,8 @@ function Menu() {
 }
 
 function Pizza(props){
+  // props is the way how React passes data to components
+  // from parent (menu) to child (Pizza) components
   if (props.pizzaObj.soldOut) return null;
 
   return (
@@ -101,6 +103,7 @@ function Pizza(props){
         <h3>{props.pizzaObj.name} </h3>
         <p>{props.pizzaObj.ingredients} </p>
         <span>{props.pizzaObj.price+3} </span>
+         {/* Curly braces are used for dynamic content in JavaScript inside JSX, in this case adding 3 to the price */}
       </div>
     </li>
   );
@@ -109,30 +112,32 @@ function Pizza(props){
 function Footer(){
   const hour = new Date().getHours();
   const openHour = 9;
-  const closeHour = 20;
+  const closeHour = 22;
   const isOpen = hour >=openHour && hour <= closeHour;
   console.log(isOpen)
-
-  if (!isOpen)
-    return (
-      <p>
-        We're closed right now. We're happy to welcome you between {openHour}:00 and {closeHour}:00
-      </p>
-  );
  
   return(
     <footer className='footer'>
     {isOpen ? (
-      <div className='order'>
+      <Order closeHours={closeHour}/>
+      ): (
         <p>
-          We're open until {closeHour}:00. Come visit us or order online
+          We're closed right now. We're happy to welcome you between {openHour}:00 and {closeHour}:00
         </p>
-        <button className='btn'>Order</button>
-      </div>
-): <p>We're closed right now. We're happy to welcome you between {openHour}:00 and {closeHour}:00 </p>} 
-    </footer>
-  )
+        )         
+      } 
+      </footer> )
+    }
+function Order (props) {
+  return <div className='order'>
+  <p>
+    We're open until {props.closeHours}:00. Come visit us or order online
+  </p>
+  <button className='btn'>Order</button>
+</div>
 }
+  
+    
 
 // render the app in the DOM
 const root = ReactDOM.createRoot(document.getElementById('root'));
