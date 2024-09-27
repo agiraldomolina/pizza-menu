@@ -91,18 +91,18 @@ function Menu() {
   )
 }
 
-function Pizza(props){
+function Pizza({pizzaObj}){
   // props is the way how React passes data to components
   // from parent (menu) to child (Pizza) components
-  if (props.pizzaObj.soldOut) return null;
+  if (pizzaObj.soldOut) return null;
 
   return (
     <li className='pizza'>
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name}/>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name}/>
       <div>
-        <h3>{props.pizzaObj.name} </h3>
-        <p>{props.pizzaObj.ingredients} </p>
-        <span>{props.pizzaObj.price+3} </span>
+        <h3>{pizzaObj.name} </h3>
+        <p>{pizzaObj.ingredients} </p>
+        <span>{pizzaObj.price+3} </span>
          {/* Curly braces are used for dynamic content in JavaScript inside JSX, in this case adding 3 to the price */}
       </div>
     </li>
@@ -119,7 +119,7 @@ function Footer(){
   return(
     <footer className='footer'>
     {isOpen ? (
-      <Order closeHours={closeHour}/>
+      <Order closeHour={closeHour} openHour={openHour}/>  // Calling Order component and assigning the closeHour prop with the current closeHour value
       ): (
         <p>
           We're closed right now. We're happy to welcome you between {openHour}:00 and {closeHour}:00
@@ -128,10 +128,10 @@ function Footer(){
       } 
       </footer> )
     }
-function Order (props) {
+function Order ({closeHour, openHour}) {
   return <div className='order'>
   <p>
-    We're open until {props.closeHours}:00. Come visit us or order online
+    We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online
   </p>
   <button className='btn'>Order</button>
 </div>
